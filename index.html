@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto Post Params</title>
+  </head>
+  <body>
+    <h2>Đang gửi dữ liệu...</h2>
+    <script>
+      function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        let data = {};
+        params.forEach((value, key) => {
+          data[key] = value;
+        });
+        return data;
+      }
+
+      function autoPost() {
+        const apiUrl =
+          "https://workflow.proptit.com/webhook/515425de-e385-4777-b05e-310fc8afbec2";
+        const params = getQueryParams();
+
+        fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(params),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.body.innerHTML =
+              "<h2>Dữ liệu đã được gửi thành công!</h2>";
+            console.log("Phản hồi từ server:", data);
+          })
+          .catch((error) => {
+            document.body.innerHTML = "<h2>Có lỗi xảy ra khi gửi dữ liệu!</h2>";
+            console.error("Lỗi:", error);
+          });
+      }
+
+      window.onload = autoPost;
+    </script>
+  </body>
+</html>

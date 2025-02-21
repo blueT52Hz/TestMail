@@ -10,11 +10,10 @@
     <script>
       function getQueryParams() {
         const params = new URLSearchParams(window.location.search);
-        let data = {};
-        params.forEach((value, key) => {
-          data[key] = value;
-        });
-        return data;
+        return {
+          email: decodeURIComponent(params.get("email") || ""),
+          join: decodeURIComponent(params.get("join") || ""),
+        };
       }
 
       function autoPost() {
